@@ -18,8 +18,8 @@ import babel from '@rolldown/plugin-babel'
 // https://vite.dev/config/
 export default defineConfig({
 
-  // base: '/ride-frontend/',
-  base: '/',
+   base: '/ride-frontend/',
+  //base: '/',
 
   plugins: [
     react(),

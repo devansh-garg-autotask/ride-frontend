@@ -25,7 +25,8 @@ import "leaflet/dist/leaflet.css";
 
 import {
     getLocation,
-    getRideLogs
+    getRideLogs,
+    getAppStatus
 } from "./api";
 
 
@@ -50,6 +51,9 @@ export default function App() {
     const [logs, setLogs] =
         useState([]);
 
+    const [status, setStatus] =
+        useState([]);
+
     const [date, setDate] =
         useState("");
 
@@ -72,9 +76,35 @@ export default function App() {
             const rideLogs =
                 await getRideLogs(selectedDate);
 
+            const appStatus =
+                await getAppStatus();
+
             setLocation(latestLocation);
 
             setLogs(rideLogs);
+
+            setStatus((prev) => {
+
+                const updated = [...prev];
+
+                appStatus.forEach((newItem) => {
+
+                    const existingIndex = updated.findIndex(
+                        (item) => item.app === newItem.app
+                    );
+
+                    if (existingIndex !== -1) {
+
+                        updated[existingIndex] = newItem;
+
+                    } else {
+
+                        updated.push(newItem);
+                    }
+                });
+
+                return updated;
+            });
 
         } catch (error) {
 
@@ -164,6 +194,27 @@ export default function App() {
                 >
                     Clear
                 </button>
+            </div>
+
+            {/* APP STATUS DISPLAY */}
+
+            <div style={statusContainerStyle}>
+
+                {status.map((item, index) => (
+
+                    <div
+                        key={index}
+                        style={statusCardStyle}
+                    >
+
+                        <strong>{item.app}</strong>
+
+                        <span>
+                            {item.appStatus}
+                        </span>
+
+                    </div>
+                ))}
             </div>
 
             {/* ===================================== */}
@@ -426,6 +477,24 @@ const clearButtonStyle = {
     border: "1px solid #ccc",
     background: "white",
     cursor: "pointer"
+};
+
+const statusContainerStyle = {
+    marginTop: "15px",
+    marginBottom: "15px",
+    display: "flex",
+    gap: "10px",
+    flexWrap: "wrap"
+};
+
+const statusCardStyle = {
+    padding: "10px 14px",
+    border: "1px solid #ccc",
+    borderRadius: "8px",
+    display: "flex",
+    gap: "8px",
+    alignItems: "center",
+    background: "#f5f5f5"
 };
 
 const mapWrapperStyle = {

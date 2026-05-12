@@ -79,3 +79,24 @@ export async function getRideLogs(
         return [];
     }
 }
+
+export async function getAppStatus() {
+
+    try {
+
+        const response = await axios.get(
+            `${BASE_URL}/app-status`
+        );
+
+        return response.data.data;
+
+    } catch (error) {
+
+        console.error(
+            "❌ getAppStatus error:",
+            error
+        );
+
+        return null;
+    }
+}

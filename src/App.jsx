@@ -317,6 +317,17 @@ export default function App() {
                                 </th>
 
                                 <th style={thStyle}>
+                                    Ride Started
+                                </th>
+                                <th style={thStyle}>
+                                    Ride Completed
+                                </th>
+
+                                <th style={thStyle}>
+                                    Final Fare
+                                </th>
+
+                                <th style={thStyle}>
                                     Updated
                                 </th>
                             </tr>
@@ -391,6 +402,32 @@ export default function App() {
                                                         log.rideAcceptanceTime
                                                       ).toLocaleString()
                                                     : "-"
+                                                }
+                                            </td>
+
+                                            <td style={tdStyle}>
+                                                {
+                                                    log.rideStartedTime
+                                                    ? new Date(
+                                                        log.rideStartedTime
+                                                      ).toLocaleString()
+                                                    : "-"
+                                                }
+                                            </td>
+
+                                            <td style={tdStyle}>
+                                                {
+                                                    log.rideCompletionTime
+                                                    ? new Date(
+                                                        log.rideCompletionTime
+                                                      ).toLocaleString()
+                                                    : "-"
+                                                }
+                                            </td>
+                                            <td style={tdStyle}>
+                                                {
+                                                    log.finalFare
+                                                    || "-"
                                                 }
                                             </td>
 

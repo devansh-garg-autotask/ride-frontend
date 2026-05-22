@@ -50,6 +50,8 @@ export default function App() {
 
     const [logs, setLogs] =
         useState([]);
+    const [breakLogs, setBreakLogs] =
+        useState([]);
 
     const [status, setStatus] =
         useState([]);
@@ -76,12 +78,17 @@ export default function App() {
             const rideLogs =
                 await getRideLogs(selectedDate);
 
+            const breakLogs =
+                await getBreakLogs(selectedDate);
+
             const appStatus =
                 await getAppStatus();
 
             setLocation(latestLocation);
 
             setLogs(rideLogs);
+
+            setBreakLogs(breakLogs);
 
             setStatus((prev) => {
 
@@ -269,6 +276,8 @@ export default function App() {
                 }
             </div>
 
+            
+
             {/* ===================================== */}
             {/* TABLE */}
             {/* ===================================== */}
@@ -446,6 +455,36 @@ export default function App() {
                     </table>
                 </div>
             </div>
+
+            {/* BREAK LOGS DISPLAY */}
+
+            <div style={breakLogsContainerStyle}>
+                <div style={sectionTitleStyle}>
+                    Break Logs
+                </div>
+
+                {breakLogs.map((log, index) => (
+
+                    <div
+                        key={index}
+                        style={breakLogCardStyle}
+                    >
+
+                        <strong>
+                            {log.isBreak
+                                ? "🛑 Break Started"
+                                : "✅ Break Ended"}
+                        </strong>
+
+                        <span>
+                            {new Date(log.timestamp)
+                                .toLocaleString()}
+                        </span>
+
+                    </div>
+                ))}
+
+            </div>
         </div>
     );
 }
@@ -548,6 +587,27 @@ const sectionTitleStyle = {
     padding: 20,
     fontSize: 20,
     fontWeight: "bold"
+};
+
+const breakLogsContainerStyle = {
+
+    display: "flex",
+    flexDirection: "column",
+    gap: "10px",
+    marginTop: "20px"
+};
+
+const breakLogCardStyle = {
+
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+
+    padding: "12px",
+    borderRadius: "10px",
+
+    backgroundColor: "#f5f5f5",
+    border: "1px solid #ddd"
 };
 
 const emptyStyle = {

@@ -100,3 +100,29 @@ export async function getAppStatus() {
         return null;
     }
 }
+
+export async function getBreakLogs(date = "") {
+
+    try {
+
+        let url = `${BASE_URL}/break/logs`;
+
+        // 🔹 Add date query if provided
+        if (date) {
+            url += `?date=${date}`;
+        }
+
+        const response = await axios.get(url);
+
+        return response.data.data || [];
+
+    } catch (error) {
+
+        console.error(
+            "❌ getBreakLogs error:",
+            error
+        );
+
+        return [];
+    }
+}

@@ -26,7 +26,8 @@ import "leaflet/dist/leaflet.css";
 import {
     getLocation,
     getRideLogs,
-    getAppStatus
+    getAppStatus,
+    getBreakLogs
 } from "./api";
 
 
